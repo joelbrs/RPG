@@ -5,8 +5,8 @@ class Tile(pygame.sprite.Sprite):
     def __init__(self, pos, groups, sprite_type, surface = pygame.Surface((TILESIZE, TILESIZE))): #o position é justamente pq iremos ter que encontrar posições/coordenadas para os objetos no nosso jogo
         super().__init__(groups) #utilizamos toda vez que vamos iniciar uma classe "Sprite"
         self.sprite_type = sprite_type
-        self.image= surface
-        if sprite_type == 'objects':
+        self.image = surface
+        if sprite_type == 'object':
             self.rect = self.image.get_rect(topleft = (pos[0], pos[1] - TILESIZE))
         else:
             self.rect = self.image.get_rect(topleft = pos)
