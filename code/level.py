@@ -4,6 +4,7 @@ from tile import *
 from player import Player
 from support import *
 from random import choice
+from sword import Sword
 
 class Level:
     def __init__(self):
@@ -11,6 +12,8 @@ class Level:
         #sprite group setup:
         self.visible_sprites = YSortCameraGroup()
         self.obstacle_sprites = pygame.sprite.Group()
+
+        self.current_attack = None
 
         #sprite setup:
         self.create_map()
@@ -40,8 +43,16 @@ class Level:
                         if style == 'object':
                             Tile((x, y),[self.obstacle_sprites], 'objects')                    
 
-        self.player = Player((1670, 2760), [self.visible_sprites], self.obstacle_sprites) #ou seja, colocamos o personagem dentro do grupo das sprites visíveis e estamos atribuindo a ele o grupo dos obstáculos para fim das colisões
+        self.player = Player((1670, 2760), [self.visible_sprites], self.obstacle_sprites, self.create_attack, self.destroy_attack) #ou seja, colocamos o personagem dentro do grupo das sprites visíveis e estamos atribuindo a ele o grupo dos obstáculos para fim das colisões
     
+    def create_attack(self):
+        self.current_attack = Sword(self.player, [self.visible_sprites])
+
+    def destroy_attack(self):
+        if self.current_attack:
+            self.current_attack.kill()
+        self.current_attack = None
+
 
     def run(self):
         #update and draw the game

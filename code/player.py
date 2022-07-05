@@ -4,7 +4,7 @@ from support import import_folder
 
 class Player(pygame.sprite.Sprite):
 
-    def __init__(self, pos, groups, obstacle_sprites): #o position é justamente pq iremos ter que encontrar posições/coordenadas para os objetos no nosso jogo
+    def __init__(self, pos, groups, obstacle_sprites, create_attack, destroy_attack): #o position é justamente pq iremos ter que encontrar posições/coordenadas para os objetos no nosso jogo
         super().__init__(groups) #utilizamos toda vez que vamos iniciar uma classe "Sprite"
         self.image = pygame.image.load('graphics/player/down_idle/idle_down.png').convert_alpha()
         self.rect = self.image.get_rect(topleft = pos)
@@ -23,8 +23,13 @@ class Player(pygame.sprite.Sprite):
         self.attack_cooldown = 400
         self.attack_time = None
 
-
         self.obstacle_sprites = obstacle_sprites #para tratarmos sobre colisões no jogo, é importante que o personagem saiba identifucar no mapa onde os obstáculos estão, e, para isso, adicionamos o argumento "obstacle_sprites" para a classe
+
+        self.create_attack = create_attack
+        self.destroy_attack = destroy_attack
+        self.weapon_index = 0
+        self.weapon = list(weapon_data.keys())[self.weapon_index]
+
 
     def import_player_assets(self):
         character_path = 'graphics/player/'
@@ -72,8 +77,9 @@ class Player(pygame.sprite.Sprite):
         
         #attack
         if keys[pygame.K_SPACE] and not self.attacking:
-            self.attack_time = pygame.time.get_ticks()
             self.attacking = True
+            self.attack_time = pygame.time.get_ticks()
+            self.create_attack()
 
     def get_status(self):
 
@@ -130,6 +136,7 @@ class Player(pygame.sprite.Sprite):
         if self.attacking:
             if self.current_time - self.attack_time >= self.attack_cooldown:
                 self.attacking = False
+                self.destroy_attack()
 
     def animate(self):
         animation = self.animations[self.status]
