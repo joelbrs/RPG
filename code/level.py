@@ -38,14 +38,9 @@ class Level:
                         if style == 'boundary':
                             Tile((x, y), [self.obstacle_sprites], 'invisible', surface = pygame.Surface((TILESIZE, TILESIZE)))
                         if style == 'objects':
-                            #create object tile
                             surf = graphics['objects'][int(col)]
                             Tile((x, y),[self.visible_sprites, self.obstacle_sprites], 'objects', surf )
 
-        #       if col == 'x':
-        #           Tile((x, y), [self.visible_sprites, self.obstacle_sprites])
-        #        if col == 'p':
-        #            self.player = Player((x, y), [self.visible_sprites], self.obstacle_sprites) #ou seja, colocamos o personagem dentro do grupo das sprites visíveis e estamos atribuindo a ele o grupo dos obstáculos para fim das colisões
         self.player = Player((1670, 2760), [self.visible_sprites], self.obstacle_sprites) #ou seja, colocamos o personagem dentro do grupo das sprites visíveis e estamos atribuindo a ele o grupo dos obstáculos para fim das colisões
     
     def run(self):
