@@ -2,10 +2,10 @@ import pygame
 from settings import *
 
 class Player(pygame.sprite.Sprite):
+
     def __init__(self, pos, groups, obstacle_sprites): #o position é justamente pq iremos ter que encontrar posições/coordenadas para os objetos no nosso jogo
         super().__init__(groups) #utilizamos toda vez que vamos iniciar uma classe "Sprite"
-        self.image = pygame.image.load('graphics/characters/link/basic movements/down-1/link-down-1.png').convert_alpha()
-        self.image = pygame.transform.scale(self.image, (80, 65))
+        self.image = pygame.image.load('graphics/player/move/down/0.png').convert_alpha()
         self.rect = self.image.get_rect(topleft = pos)
 
         self.direction = pygame.math.Vector2() #isso nos dá um vetor que vai possuir um x e um y em que, por padrão os dois serão zero e, a partir disso, iremos configurar o nosso programa para utilizarmos o teclado do nosso computador para mudar esses números de x e y e mover nosso personagem
@@ -46,7 +46,7 @@ class Player(pygame.sprite.Sprite):
     def collision(self, direction):
         if direction == 'horizontal':
             for sprite in self.obstacle_sprites: #a cada sprite presente em "obstacle_sprites"
-                if sprite.rect.colliderect(self.rect): #basicamente estamos checando/comparando o retângulo do sprite do obstáculo com o sprite do personagem
+                if sprite.rect.colliderect(self.rect): #basicamente estamos checando se o retângulo do sprite do obstáculo e o sprite do personagem colidiram
                     if self.direction.x > 0: #movendo para a direita
                         self.rect.right = sprite.rect.left #ou seja, quando o personagem está se movendo para a direita e colide com o objeto (geralmente no lado esquerdo do objeto), normalmente esse objeto o sobrepõe, porém, ao utilizarmos esse parâmetro, fazemos com que nosso personagem (que agora está sobreposto pelo objeto) se move para o lado esquerdo do objeto ao qual "colidiu"
                     if self.direction.x < 0: #movendo para a esquerda
