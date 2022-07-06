@@ -21,10 +21,12 @@ class Level:
     def create_map(self):
         layouts = {
             'boundary': import_csv_layout('map/map_FloorBlocks.csv'),
+            'details': import_csv_layout('map/map_Details.csv'),
             'object': import_csv_layout('map/map_Objects.csv')
         }
         
         graphics = { 
+            'details': import_folder('graphics/details'),
             'objects': import_folder('graphics/objects')
         }
         
@@ -40,6 +42,9 @@ class Level:
                         if style == 'boundary':
                             Tile((x, y), [self.obstacle_sprites], 'invisible', surface = pygame.Surface((TILESIZE, TILESIZE)))
                
+                        if style == 'details':
+                            random_details_image = choice(graphics['details'])
+                            Tile((x, y),[self.visible_sprites, self.obstacle_sprites], 'details', random_details_image) 
                         if style == 'object':
                             Tile((x, y),[self.obstacle_sprites], 'objects')                    
 
